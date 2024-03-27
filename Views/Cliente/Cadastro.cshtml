@@ -1,0 +1,247 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Creating a Modern Portfolio Landing Page with Bootstrap and JavaScript</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="~/css/cliente/cadastro.css" />
+</head>
+
+<body>
+    <a href="javascript:" id="return-to-top"><span class="fa fa-arrow-up" aria-hidden="true"></span></a>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#about">
+                    <img alt="Marina Marques" class="navbar-brand"
+                         src="~/css/Logo_Marca.png">
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ResponsiveNav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right" id="ResponsiveNav">
+                <ul class="nav navbar-nav">
+                    <li><a href="#about-me" class="page-scroll">ABOUT</a></li>
+                    <li><a href="#portfolio" class="page-scroll">PORTFOLIO</a></li>
+                    <li><a href="#services" class="page-scroll">SERVICES</a></li>
+                    <li><a href="#contact" class="page-scroll">CONTACT</a></li>
+                </ul>
+            </div>
+            <!-- end collapse -->
+        </div>
+        <!-- end container fluid -->
+    </nav>
+    <!-- end navigation -->
+    <!-- intro header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="card-content">
+                        <div class="card-text">
+                            <h2>
+                                EXAME DE VISTA GRATUITO
+                                EM SANTOS E PRAIA GRANDE
+                            </h2>
+                            <p>
+                                Agendamento rápido e prático, atendimento Semanal, e totalmente gratuito.
+                                Vagas limitadas, solicite já, preenchendo a ficha rápida e prática de solicitação
+                            </p>
+                        </div>
+                        <div class="card-form">
+                            <h2>Ficha de Cadastro</h2>
+                            <form id="cadastroForm" style="color: #008080;">
+                                <div class="form-group">
+                                    <label for="Localidade">Escolha uma Localidade:</label>
+                                    <select id="Localidade" name="Localidade" name="Localidade" required>
+                                        <option value="1">Santos</option>
+                                        <option value="2">Praia Grande</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Horario">Escolha um Horario:</label>
+                                    <select name="Horario" id="Horario" required>
+                                        <option value="">Selecione Horario</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nome">Seu nome completo:</label>
+                                    <br>
+                                    <input type="text" id="Nome" name="Nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nome">Seu Email:</label>
+                                    <br>
+                                    <input type="email" id="Email" name="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Idade">Quantos anos você tem?:</label>
+                                    <br>
+                                    <input type="number" id="Idade" name="Idade" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Necessidade">Qual é a sua maior necessidade no momento?:</label>
+                                    <select name="Necessidade" id="necessidade">
+                                        <option value="1">Exame de Rotina</option>
+                                        <option value="2">Revisão do Grau</option>
+                                        <option value="3">Tratamento de Catarata</option>
+                                        <option value="4">Tratamento de Glaucoma</option>
+                                        <option value="5">Tratamento de Ceratocone</option>
+                                        <option value="6">Tratamento de Pterígio</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Telefone">Seu Whatsapp p/ Receber a Confirmação:</label>
+                                    <input type="text" id="Telefone" name="Telefone" required>
+                                </div>
+                            </form>
+                            <input class="btn btn-primary" id="enviar-formulario" type="button" value="Enviar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="mouse-here"></div>
+    <section id="about-me">
+        <div class="container">
+            <div class="row">
+                <h2>Sobre</h2>
+                <div class="col-lg-6 about-intro">
+                    <div class="about-inner">
+                        <div class="about-ct">
+                            <img src="~/css/imagemSobre.jpg" alt="Boa Visão"
+                                 class="img-responsive">
+                            <div class="textbox-about hidden-xs">
+                                <div class="btn button-social">
+                                    <a href="https://codepen.io/shvvffle/" target="_blank" alt="CodePen profile">
+                                        <span class="fa fa-codepen" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="https://pt.linkedin.com/in/marinamarques9" alt="LinkedIn profile"
+                                       target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                    <a href="https://github.com/shvvffle" target="_blank" alt="GitHub profile">
+                                        <span class="fa fa-github" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 about-intro-text">
+                    <p>
+                        Bem-vindo ao <span>Projeto Boa Visão</span>.<br>
+                        onde transformamos ideias em realidade! Desde <span>2012</span>, temos sido uma força inovadora no mercado, oferecendo soluções de alta qualidade e atendimento excepcional aos nossos clientes.
+                        No Projeto Boa Visão, acreditamos que cada desafio é uma oportunidade para crescer e superar expectativas. Com uma equipe dedicada e experiente, estamos comprometidos em
+                        fornecer as melhores soluções para as necessidades individuais de cada cliente.
+                        Nossa missão é simplificar processos complexos e criar experiências memoráveis para nossos clientes. Ao combinarmos criatividade, tecnologia e excelência em serviço, estamos constantemente elevando o padrão da indústria.
+                        Junte-se a nós na jornada para o sucesso. Inscreva-se agora em nossa Landing Page e descubra
+                        como podemos ajudá-lo a enxerga melhor a vida.
+                    </p>
+                </div>
+            </div>
+            <!-- end row about -->
+        </div>
+        <!-- end container about -->
+    </section>
+    <!-- end about me -->
+    <!-- start work portfolio -->
+    <section id="portfolio">
+        <div class="container-fluid portfolio-ct">
+            <h2>Veja o feedback que estamos recebendo nas redes sociais</h2>
+            <div class="row">
+                <!-- start first portfolio item -->
+                <div class="col-sm-6 col-md-4 grid-portfolio">
+                    <div class="portfolio-item-ct">
+                        <div class="thumbnail">
+                            <img src="~/css/FeedBack_1.png"
+                                 alt="Portfolio - ARE YOU FEELING LOW?" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+                <!-- end first portfolio item -->
+                <!-- start second portfolio item -->
+                <div class="col-sm-6 col-md-4 grid-portfolio">
+                    <div class="portfolio-item-ct">
+                        <div class="thumbnail">
+                            <img src="~/css/FeedBack_2.png"
+                                 alt="Portfolio - ARE YOU FEELING LOW?" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+                <!-- end second portfolio item -->
+                <!-- start third portfolio item -->
+                <div class="col-sm-6 col-md-4 grid-portfolio">
+                    <div class="portfolio-item-ct">
+                        <div class="thumbnail">
+                            <img src="~/css/FeedBack_3.png"
+                                 alt="Portfolio - PERSONAL WEBSITE" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+                <!-- end third portfolio item -->
+            </div>
+            <!-- end row portfolio -->
+        </div>
+        <!-- end container portfolio -->
+    </section>
+    <!-- end work portfolio -->
+    <!-- start services -->
+    <section id="services">
+        <div class="container">
+            <h2>Vantagens</h2>
+            <div class="row">
+                <div class="ct-services">
+                    <div class="col-md-4 services-item">
+                        <div class="rotate">
+                            <span class="fa fa-eye" aria-hidden="true"></span>
+                            <!-- <i class="fa fa-file-code-o fa-wrapper" aria-hidden="true"></i> -->
+                        </div>
+                        <h3>Front End Development</h3>
+                        <p>Development of responsive websites, cross-browser and cross-platform testing.</p>
+                    </div>
+                    <div class="col-md-4 services-item">
+                        <div class="rotate">
+                            <span class="fa fa-id-badge" aria-hidden="true"></span>
+                        </div>
+                        <h3>Wordpress Development</h3>
+                        <p>Custom development (website, theme & plugin), hosting and maintenance.</p>
+                    </div>
+                    <div class="col-md-4 services-item">
+                        <div class="rotate">
+                            <span class="fa fa-line-chart" aria-hidden="true"></span>
+                            <!-- <i class="fa fa-search fa-wrapper" aria-hidden="true"></i>-->
+                        </div>
+                        <h3>Search Engine Optimization</h3>
+                        <p>
+                            Increase your visibility across all major search engines & local search with SEO techniques.
+                        </p>
+                    </div>
+                </div>
+                <!-- end row of services -->
+            </div>
+            <!-- end row services section -->
+        </div>
+        <!-- end div services section -->
+    </section>
+</body>
+
+</html>
+@{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/7.2.1/imask.min.js"></script>
+    <script src="~/js/cliente/cadastro.js" asp-append-version="true"></script>
+}

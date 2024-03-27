@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Clientes</title>
+    <style>
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal" id="modalEdicao">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="informarClienteLabel"></h5>
+                </div>
+                <div class="modal-body">
+                    <form id="formCliente">
+                        @Html.Hidden("Id")
+                        <div class="row">
+                            <div class="form-group col-md-4 col-12">
+                                <select class="form-control" name="Localidade" id="LocalidadeModal">
+                                    <option value="">Selecione Localidade</option>
+                                    <option value="1">Santos</option>
+                                    <option value="2">Praia Grande</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4 col-12">
+                                <select class="form-control" name="Horario" name="Horario" id="HorarioModal" required>
+                                    <option value="">Selecione Horario</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4 col-12">
+                                <input type="text" class="form-control" name="Nome" placeholder="Nome">
+                            </div>
+                            <div class="form-group col-md-4 col-12">
+                                <input type="text" class="form-control" name="Email" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-4 col-12">
+                                <input type="number" class="form-control" name="Idade" placeholder="Idade">
+                            </div>
+                            <div class="form-group col-md-4 col-12">
+                                <input type="text" class="form-control telefone" name="Telefone" placeholder="Telefone">
+                            </div>
+                            <div class="form-group col-md-4 col-12">
+                                <select class="form-control" name="Necessidade">
+                                    <option value="">Selecione Necessidade</option>
+                                    <option value="1">Exame de Rotina</option>
+                                    <option value="2">Revisão do Grau</option>
+                                    <option value="3">Tratamento de Catarata</option>
+                                    <option value="4">Tratamento de Glaucoma</option>
+                                    <option value="5">Tratamento de Ceratocone</option>
+                                    <option value="6">Tratamento de Pterígio</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <button type="button" class="btn btn-danger" id="btnExcluirCliente" style="display:none">Excluir</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" id="btnCancelar" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnSalvarCliente"><i class="fas fa-save"></i> Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Tabela de Clientes</h2>
+            </div>
+            <div class="card-body">
+                <form id="filterForm">
+                    <div class="row">
+                        <div class="form-group col-md-3 col-8">
+                            <select class="form-control" id="Horario" name="Horario" name="Horario">
+                                <option value="">Selecione Horario</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome">
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <input type="text" class="form-control" id="Email" name="Email" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <input type="number" class="form-control" id="Idade" name="Idade" placeholder="Idade">
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <input type="text" class="form-control telefone" id="Telefone" name="Telefone" placeholder="Telefone">
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <select class="form-control" id="Localidade" name="Localidade">
+                                <option>Selecione Localidade</option>
+                                <option value="1">Santos</option>
+                                <option value="2">Praia Grande</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <select class="form-control" name="Necessidade" id="Necessidade">
+                                <option>Selecione Necessidade</option>
+                                <option value="1">Exame de Rotina</option>
+                                <option value="2">Revisão do Grau</option>
+                                <option value="3">Tratamento de Catarata</option>
+                                <option value="4">Tratamento de Glaucoma</option>
+                                <option value="5">Tratamento de Ceratocone</option>
+                                <option value="6">Tratamento de Pterígio</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 col-8">
+                            <input type="date" class="form-control" id="DataCadastro" name="DataCadastro" placeholder="DataCadastro">
+                        </div>
+                        <div class="form-group col-md-12 col-12 mr-2 d-flex justify-content-between">
+                            <button type="button" id="downloadButton" class="btn btn-success"><i class="fa fa-download"></i> Download</button>
+                            <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i> Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-6">
+                        <button class="open-modal btn btn-primary align-content-end">Adicionar Cliente</button>
+                    </div>
+                    <div class="col-md-6 col-6">
+                        <p id="Total" class="btn btn-toolbar" style="cursor: default"></p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tabelaCliente">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Horário</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Idade</th>
+                                    <th>Localidade</th>
+                                    <th>Necessidade</th>
+                                    <th>Telefone</th>
+                                    <th>Data de Cadastro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@section Scripts{
+    <script src="~/js/home/index.js"></script>
+}
