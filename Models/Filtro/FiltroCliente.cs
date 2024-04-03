@@ -7,6 +7,7 @@ namespace ProjetoOticaBoaVisao.Models
     public class FiltroCliente
     {
         public int? Id { get; set; }
+        public string DiaSemana { get; set; }
         public string? Horario { get; set; }
         public string? Nome { get; set; }
         public string? Email { get; set; }

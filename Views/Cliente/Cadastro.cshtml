@@ -20,26 +20,10 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#about">
-                    <img alt="Marina Marques" class="navbar-brand"
-                         src="~/css/Logo_Marca.png">
+                <a class="" href="#about">
+                    <img alt="Projeto Boa Visão" class="navbar-brand" src="/css/Logo_Marca.png">
                 </a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ResponsiveNav">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-right" id="ResponsiveNav">
-                <ul class="nav navbar-nav">
-                    <li><a href="#about-me" class="page-scroll">ABOUT</a></li>
-                    <li><a href="#portfolio" class="page-scroll">PORTFOLIO</a></li>
-                    <li><a href="#services" class="page-scroll">SERVICES</a></li>
-                    <li><a href="#contact" class="page-scroll">CONTACT</a></li>
-                </ul>
-            </div>
-            <!-- end collapse -->
         </div>
         <!-- end container fluid -->
     </nav>
@@ -52,7 +36,7 @@
                     <div class="card-content">
                         <div class="card-text">
                             <h2>
-                                EXAME DE VISTA GRATUITO
+                                TESTE DE VISÃO
                                 EM SANTOS E PRAIA GRANDE
                             </h2>
                             <p>
@@ -63,6 +47,14 @@
                         <div class="card-form">
                             <h2>Ficha de Cadastro</h2>
                             <form id="cadastroForm" style="color: #008080;">
+                                <div class="form-group">
+                                    <label for="DiaSemana">Escolha um dia da semana:</label>
+                                    <select id="DiaSemana" name="DiaSemana" name="DiaSemana" required>
+                                        <option value="1">Segunda</option>
+                                        <option value="2">Quinta</option>
+                                        <option value="3">Sexta</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="Localidade">Escolha uma Localidade:</label>
                                     <select id="Localidade" name="Localidade" name="Localidade" required>
@@ -82,14 +74,14 @@
                                     <input type="text" id="Nome" name="Nome" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="Nome">Seu Email:</label>
+                                    <label for="Email">Seu Email:</label>
                                     <br>
                                     <input type="email" id="Email" name="Email" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Idade">Quantos anos você tem?:</label>
                                     <br>
-                                    <input type="number" id="Idade" name="Idade" required>
+                                    <input type="text" id="Idade" name="Idade" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Necessidade">Qual é a sua maior necessidade no momento?:</label>
@@ -100,6 +92,7 @@
                                         <option value="4">Tratamento de Glaucoma</option>
                                         <option value="5">Tratamento de Ceratocone</option>
                                         <option value="6">Tratamento de Pterígio</option>
+                                        <option value="7">Outros</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -115,26 +108,27 @@
         </div>
     </header>
     <div id="mouse-here"></div>
-    <section id="about-me">
+    <section id="sobre">
         <div class="container">
             <div class="row">
-                <h2>Sobre</h2>
+                <div style="width: 100% !important" class="text-center">
+                    <h2>Sobre</h2>
+                </div>
                 <div class="col-lg-6 about-intro">
                     <div class="about-inner">
                         <div class="about-ct">
-                            <img src="~/css/imagemSobre.jpg" alt="Boa Visão"
-                                 class="img-responsive">
+                            <img src="/css/imagemSobre.jpg" alt="Boa Visão" class="img-responsive">
                             <div class="textbox-about hidden-xs">
-                                <div class="btn button-social">
+                                <!-- <div class="btn button-social">
                                     <a href="https://codepen.io/shvvffle/" target="_blank" alt="CodePen profile">
                                         <span class="fa fa-codepen" aria-hidden="true"></span>
                                     </a>
                                     <a href="https://pt.linkedin.com/in/marinamarques9" alt="LinkedIn profile"
-                                       target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                        target="_blank"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
                                     <a href="https://github.com/shvvffle" target="_blank" alt="GitHub profile">
                                         <span class="fa fa-github" aria-hidden="true"></span>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -142,11 +136,15 @@
                 <div class="col-lg-6 about-intro-text">
                     <p>
                         Bem-vindo ao <span>Projeto Boa Visão</span>.<br>
-                        onde transformamos ideias em realidade! Desde <span>2012</span>, temos sido uma força inovadora no mercado, oferecendo soluções de alta qualidade e atendimento excepcional aos nossos clientes.
-                        No Projeto Boa Visão, acreditamos que cada desafio é uma oportunidade para crescer e superar expectativas. Com uma equipe dedicada e experiente, estamos comprometidos em
+                        onde transformamos ideias em realidade! Desde <span>2020</span>, temos sido uma força inovadora
+                        na saúde, oferecendo soluções de alta qualidade e atendimento excepcional aos nossos clientes.
+                        No Projeto Boa Visão, acreditamos que cada desafio é uma oportunidade para crescer e superar
+                        expectativas. Com uma equipe dedicada e experiente, estamos comprometidos em
                         fornecer as melhores soluções para as necessidades individuais de cada cliente.
-                        Nossa missão é simplificar processos complexos e criar experiências memoráveis para nossos clientes. Ao combinarmos criatividade, tecnologia e excelência em serviço, estamos constantemente elevando o padrão da indústria.
-                        Junte-se a nós na jornada para o sucesso. Inscreva-se agora em nossa Landing Page e descubra
+                        Nossa missão é simplificar processos complexos e criar experiências memoráveis para nossos
+                        clientes. Ao combinarmos criatividade, tecnologia e excelência em serviço, estamos
+                        constantemente elevando o padrão da indústria.
+                        Junte-se a nós na jornada para o sucesso. Inscreva-se agora e descubra
                         como podemos ajudá-lo a enxerga melhor a vida.
                     </p>
                 </div>
@@ -157,7 +155,7 @@
     </section>
     <!-- end about me -->
     <!-- start work portfolio -->
-    <section id="portfolio">
+    <section id="feedback">
         <div class="container-fluid portfolio-ct">
             <h2>Veja o feedback que estamos recebendo nas redes sociais</h2>
             <div class="row">
@@ -165,8 +163,7 @@
                 <div class="col-sm-6 col-md-4 grid-portfolio">
                     <div class="portfolio-item-ct">
                         <div class="thumbnail">
-                            <img src="~/css/FeedBack_1.png"
-                                 alt="Portfolio - ARE YOU FEELING LOW?" class="img-responsive">
+                            <img src="/css/FeedBack_1.png" class="img-responsive">
                         </div>
                     </div>
                 </div>
@@ -175,8 +172,7 @@
                 <div class="col-sm-6 col-md-4 grid-portfolio">
                     <div class="portfolio-item-ct">
                         <div class="thumbnail">
-                            <img src="~/css/FeedBack_2.png"
-                                 alt="Portfolio - ARE YOU FEELING LOW?" class="img-responsive">
+                            <img src="/css/FeedBack_2.png" class="img-responsive">
                         </div>
                     </div>
                 </div>
@@ -185,8 +181,7 @@
                 <div class="col-sm-6 col-md-4 grid-portfolio">
                     <div class="portfolio-item-ct">
                         <div class="thumbnail">
-                            <img src="~/css/FeedBack_3.png"
-                                 alt="Portfolio - PERSONAL WEBSITE" class="img-responsive">
+                            <img src="/css/FeedBack_3.png" class="img-responsive">
                         </div>
                     </div>
                 </div>
@@ -198,7 +193,7 @@
     </section>
     <!-- end work portfolio -->
     <!-- start services -->
-    <section id="services">
+    <section id="vantagens">
         <div class="container">
             <h2>Vantagens</h2>
             <div class="row">
@@ -208,24 +203,25 @@
                             <span class="fa fa-eye" aria-hidden="true"></span>
                             <!-- <i class="fa fa-file-code-o fa-wrapper" aria-hidden="true"></i> -->
                         </div>
-                        <h3>Front End Development</h3>
-                        <p>Development of responsive websites, cross-browser and cross-platform testing.</p>
+                        <h3>Credibilidade</h3>
+                        <p>O maior programa de exames de vista GRATUITO da baixada, desde 2020.</p>
                     </div>
                     <div class="col-md-4 services-item">
                         <div class="rotate">
                             <span class="fa fa-id-badge" aria-hidden="true"></span>
                         </div>
-                        <h3>Wordpress Development</h3>
-                        <p>Custom development (website, theme & plugin), hosting and maintenance.</p>
+                        <h3>Consistência</h3>
+                        <p>Mais de 200 atendimentos gratuitos todos os meses.</p>
                     </div>
                     <div class="col-md-4 services-item">
                         <div class="rotate">
                             <span class="fa fa-line-chart" aria-hidden="true"></span>
                             <!-- <i class="fa fa-search fa-wrapper" aria-hidden="true"></i>-->
                         </div>
-                        <h3>Search Engine Optimization</h3>
+                        <h3>Inovação</h3>
                         <p>
-                            Increase your visibility across all major search engines & local search with SEO techniques.
+                            Parcerias exclusivas com clínicas e óticas comprometidas com a missão do Projeto Boa
+                            Visão para todos.
                         </p>
                     </div>
                 </div>

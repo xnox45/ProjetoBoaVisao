@@ -9,6 +9,9 @@ namespace ProjetoOticaBoaVisao.Models
         public int Id { get; set; }
 
         [Required]
+        public string DiaSemana { get; set; }
+
+        [Required]
         public string Horario { get; set; }
 
         [Required]

@@ -44,6 +44,7 @@ public class HomeController : Controller
         {
             cliente = _context.Clientes.FirstOrDefault(x => x.Id == filtro.Id);
 
+            cliente.DiaSemana = filtro.DiaSemana;
             cliente.Idade = filtro.Idade.Value;
             cliente.Email = filtro.Email;
             cliente.Horario = filtro.Horario;
@@ -63,7 +64,8 @@ public class HomeController : Controller
                 IdLocalidade = filtro.Localidade.Value,
                 IdNecessidade = filtro.Necessidade.Value,
                 Nome = filtro.Nome,
-                Telefone = filtro.Telefone
+                Telefone = filtro.Telefone,
+                DiaSemana = filtro.DiaSemana,
             };
 
             _context.Clientes.Add(cliente);
@@ -178,10 +180,14 @@ public class HomeController : Controller
         if (filtro.DataCadastro != null)
             queryable = queryable.Where(x => x.DataCadastro == filtro.DataCadastro);
 
+        if (filtro.DiaSemana != null)
+            queryable = queryable.Where(x => x.DiaSemana == filtro.DiaSemana);
+
         await queryable.ForEachAsync(x =>
         {
             x.Necessidade = x.IdNecessidade == 1 ? "Exame de Rotina" : x.IdNecessidade == 2 ? "Revisão do Grau" : x.IdNecessidade == 3 ? "Tratamento de Catarata" : x.IdNecessidade == 4 ? "Tratamento de Glaucoma" : x.IdNecessidade == 5 ? "Tratamento de Ceratocone" : x.IdNecessidade == 6 ? "Tratamento de Pterígio" : "";
             x.Localidade = x.IdLocalidade == 1 ? "Santos" : x.IdLocalidade == 2 ? "Praia Grande" : "";
+            x.DiaSemana = x.DiaSemana == "1" ? "Segunda" : x.DiaSemana == "2" ? "Quinta" : x.DiaSemana == "3" ? "Sexta" : "";
         });
 
         var retorno = queryable.ToList();

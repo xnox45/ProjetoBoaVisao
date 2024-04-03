@@ -159,6 +159,7 @@ $(document).ready(function () {
                 data.clientes.forEach(function (item) {
                     var row = '<tr>' +
                         '<td>' + `<a href="javascript:void(0)" class="open-modal" title="editar" data-id-cliente="${item.id}"><i class="fa fa-eye"></i></a>` + '</td>' +
+                        '<td>' + item.diaSemana + '</td>' +
                         '<td>' + item.horario + '</td>' +
                         '<td>' + item.nome + '</td>' +
                         '<td>' + item.email + '</td>' +

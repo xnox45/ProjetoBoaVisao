@@ -83,6 +83,14 @@
                 <form id="filterForm">
                     <div class="row">
                         <div class="form-group col-md-3 col-8">
+                            <select class="form-control" id="DiaSemana" name="DiaSemana" name="DiaSemana">
+                                <option value="">Selecione Dia Semana</option>
+                                <option value="1">Segunda</option>
+                                <option value="2">Quinta</option>
+                                <option value="3">Sexta</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 col-8">
                             <select class="form-control" id="Horario" name="Horario" name="Horario">
                                 <option value="">Selecione Horario</option>
                                 <option value="09:30">09:30</option>
@@ -149,10 +157,11 @@
                         <p id="Total" class="btn btn-toolbar" style="cursor: default"></p>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tabelaCliente">
+                        <table class="table table-striped text-center" id="tabelaCliente">
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Dia Semana</th>
                                     <th>Horário</th>
                                     <th>Nome</th>
                                     <th>Email</th>

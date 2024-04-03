@@ -3,6 +3,11 @@ var telefoneMask = IMask(telefoneInput, {
 	mask: '(00) 00000-0000'
 });
 
+var idadeInput = document.getElementById('Idade');
+var idadeMask = IMask(idadeInput, {
+	mask: '000'
+});
+
 jQuery.noConflict();
 (function ($) {
 	$(window).on('load', function () {
@@ -73,22 +78,67 @@ jQuery.noConflict();
 		$("#Localidade").change(function () {
 			var selectedLocalidade = $(this).val();
 			var horarios = {
-				1: ["13:30", "14:00", "14:30", "15:00", "15:30"],
-				2: ["09:30", "10:00", "10:30", "11:00", "11:30"]
+				1: ["10:00", "10:15", "10:30", "10:45",
+					"11:00", "11:15", "11:30", "11:45",
+					"13:00", "13:15", "13:30", "13:45",
+					"14:00", "14:15", "14:30", "14:45",
+					"15:00", "15:15", "15:30", "15:45",
+					"16:00"],
+				2: ["09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30"],
+				3: ["13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:30", "15:45"]
 			};
 
 			var horarioSelect = $("#Horario");
-			horarioSelect.empty(); // Limpa as opções anteriores
+			horarioSelect.empty();
 
 			if (selectedLocalidade !== "") {
-				$.each(horarios[selectedLocalidade], function (index, value) {
-					horarioSelect.append($("<option></option>").attr("value", value).text(value));
-				});
+				horarioSelect.empty();
+				if ($("#DiaSemana").val() == "2" && selectedLocalidade == "1") {
+					$.each(horarios[3], function (index, value) {
+						horarioSelect.append($("<option></option>").attr("value", value).text(value));
+					});
+				}
+
+				else if ($("#DiaSemana").val() == "3" && selectedLocalidade == "2") {
+					horarioSelect.empty();
+					$.each(horarios[1], function (index, value) {
+						horarioSelect.append($("<option></option>").attr("value", value).text(value));
+					});
+				}
+
+				else {
+					horarioSelect.empty();
+					$.each(horarios[selectedLocalidade], function (index, value) {
+						horarioSelect.append($("<option></option>").attr("value", value).text(value));
+					});
+				}
 			}
 		});
 
 		// Chama a função uma vez para inicializar os horários com base na seleção inicial (se houver)
 		$("#Localidade").trigger("change");
+
+		$("#DiaSemana").change(function () {
+			var selectedDiaSemana = $(this).val();
+			var lojasSemana = {
+				1: [{ text: "Santos", value: "1" }],
+				2: [{ text: "Santos", value: "1" }, { text: "Praia Grande", value: "2" }],
+				3: [{ text: "Praia Grande", value: "2" }],
+			};
+
+			var localidadeSelect = $("#Localidade");
+			localidadeSelect.empty(); // Limpa as opções anteriores
+
+			if (selectedDiaSemana !== "") {
+				$.each(lojasSemana[selectedDiaSemana], function (index, obj) {
+					localidadeSelect.append($("<option></option>").attr("value", obj.value).text(obj.text));
+				});
+			}
+
+			$("#Localidade").trigger("change");
+		});
+
+		$("#DiaSemana").trigger("change");
 	});
 
 	function salvarCliente() {
@@ -111,6 +161,14 @@ jQuery.noConflict();
 		});
 	}
 
+	function validarEmail(e) {
+		var email = $(e).val();
+		var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(email)) {
+			$(this).addClass("invalid");
+		}
+	}
+
 	$('#enviar-formulario').click(function (e) {
 		e.preventDefault();
 
@@ -121,6 +179,15 @@ jQuery.noConflict();
 		$('#cadastroForm :input').each(function () {
 			var valor = $(this).val();
 			var nomeProp = $(this).attr('name');
+
+			if (nomeProp == "Email") {
+				var email = $(this).val();
+				var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				if (!emailRegex.test(email)) {
+					$(this).addClass("invalid");
+					naoEnviar = true;
+				}
+			}
 
 			if (valor == undefined || valor == null || valor == "") {
 				$(this).addClass("invalid");
@@ -135,9 +202,7 @@ jQuery.noConflict();
 
 		var necessidade = $('#necessidade option:selected').html();
 
-		var texto = `Olá me chamo ${obj.Nome}. \n\nQueria saber mais sobre ${necessidade} grátis.`;
-
-		console.log(obj);
+		var texto = `Nome: ${obj.Nome} \nNecessidade: ${necessidade} \nHorario: ${obj.Horario} \nIdade: ${obj.Idade} \nTelefone: ${obj.Telefone} \nEmail: ${obj.Email} \nLocalidade: ${$("#Localidade").find("option:selected").html()}`;
 
 		salvarCliente();
 
@@ -146,18 +211,17 @@ jQuery.noConflict();
 
 			window.open(`https://api.whatsapp.com/send?phone=5513991549286&text=${textoCodificado}`, "_blank");
 		}
-		else {
-			texto += `<br/> email: ${obj.Email}<br/> idade: ${obj.Idade}<br/> horario: ${obj.Horario}`
-			Email.send({
-				SecureToken: "58cb3203-346d-442a-a4c2-f437972eb834",
-				From: 'visaosaudedosolhos@gmail.com',
-				To: "visaosaudedosolhos@gmail.com",
-				Subject: `Contato: ${obj.Nome}`,
-				Body: `${texto}<br/>Numéro Whatsapp: ${obj.Telefone}`
-			}).then(
-				message => alert(message)
-			);
-		}
+
+		texto = texto.replace(/\n/g, "<br/>");
+		Email.send({
+			SecureToken: "58cb3203-346d-442a-a4c2-f437972eb834",
+			From: 'visaosaudedosolhos@gmail.com',
+			To: "visaosaudedosolhos@gmail.com",
+			Subject: `Contato: ${obj.Nome}`,
+			Body: texto
+		}).then(
+			message => alert("Cadastro concluído!")
+		);
 	});
 })(jQuery);
 
