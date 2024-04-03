@@ -136,7 +136,10 @@ public class HomeController : Controller
                 // Converte o pacote Excel em um array de bytes
                 byte[] fileContents = excelPackage.GetAsByteArray();
 
-                var caminho = @"C:\Users\frede\OneDrive\Documentos\Freelancers\ProjetoOticaBoavisao\ProjetoOticaBoaVisao\Clientes.xlsx";
+                string diretorioProjeto = AppDomain.CurrentDomain.BaseDirectory;
+
+                // Combine o caminho do diretório do projeto com o caminho do arquivo Excel
+                string caminho = Path.Combine(diretorioProjeto, "Clientes.xlsx");
 
                 if (System.IO.File.Exists(caminho))
                     System.IO.File.Delete(caminho);
