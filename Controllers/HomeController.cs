@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using ProjetoOticaBoaVisao.Data;
 using ProjetoOticaBoaVisao.Models;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Security.Claims;
+using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace ProjetoOticaBoaVisao.Controllers;
 
@@ -25,7 +28,7 @@ public class HomeController : Controller
         string? login = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
         if (login == null)
-           return RedirectToPage("/Account/Login", new { area = "Identity" });
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
 
         return View();
     }
@@ -81,51 +84,102 @@ public class HomeController : Controller
     {
         var retorno = await PesquisarClientesPrivate(filtro);
 
-        return Json(new {clientes = retorno, total = retorno.Count()});
+        return Json(new { clientes = retorno, total = retorno.Count() });
     }
 
-    public async Task<ActionResult> ExportarParaExcel(FiltroCliente filtro)
+    [HttpPost]
+    public async Task<JsonResult> ExportarParaExcel(FiltroCliente filtro)
     {
-        // Obtém a lista de clientes
-        var clientes = await PesquisarClientesPrivate(filtro);
-
-        // Cria um novo pacote Excel
-        ExcelPackage.LicenseContext = LicenseContext.Commercial;
-        using (var excelPackage = new ExcelPackage())
+        try
         {
-            // Adiciona uma planilha ao pacote Excel
-            var worksheet = excelPackage.Workbook.Worksheets.Add("Clientes");
+            // Obtém a lista de clientes
+            var clientes = await PesquisarClientesPrivate(filtro);
 
-            // Adiciona cabeçalhos de coluna
-            worksheet.Cells[1, 1].Value = "Nome";
-            worksheet.Cells[1, 2].Value = "Email";
-            worksheet.Cells[1, 3].Value = "Idade";
-            worksheet.Cells[1, 4].Value = "Localidade";
-            worksheet.Cells[1, 5].Value = "Necessidade";
-            worksheet.Cells[1, 6].Value = "Telefone";
-            worksheet.Cells[1, 7].Value = "Horario";
-            worksheet.Cells[1, 8].Value = "DataCadastro";
-
-            // Preenche os dados dos clientes
-            int row = 2;
-            foreach (var cliente in clientes)
+            // Cria um novo pacote Excel
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var excelPackage = new ExcelPackage())
             {
-                worksheet.Cells[row, 1].Value = cliente.Nome;
-                worksheet.Cells[row, 2].Value = cliente.Email;
-                worksheet.Cells[row, 3].Value = cliente.Idade;
-                worksheet.Cells[row, 4].Value = cliente.Localidade;
-                worksheet.Cells[row, 5].Value = cliente.Necessidade;
-                worksheet.Cells[row, 6].Value = cliente.Telefone;
-                worksheet.Cells[row, 7].Value = cliente.Horario;
-                worksheet.Cells[row, 8].Value = cliente.DataCadastro;
-                row++;
+                // Adiciona uma planilha ao pacote Excel
+                var worksheet = excelPackage.Workbook.Worksheets.Add("Clientes");
+
+                // Adiciona cabeçalhos de coluna
+                worksheet.Cells[1, 1].Value = "Nome";
+                worksheet.Cells[1, 2].Value = "Email";
+                worksheet.Cells[1, 3].Value = "Idade";
+                worksheet.Cells[1, 4].Value = "Localidade";
+                worksheet.Cells[1, 5].Value = "Necessidade";
+                worksheet.Cells[1, 6].Value = "Telefone";
+                worksheet.Cells[1, 7].Value = "Horario";
+                worksheet.Cells[1, 8].Value = "Data de Cadastro";
+                worksheet.Cells[1, 9].Value = "Dia da semana";
+
+                // Preenche os dados dos clientes
+                int row = 2;
+
+                foreach (var cliente in clientes)
+                {
+                    worksheet.Cells[row, 1].Value = cliente.Nome;
+                    worksheet.Cells[row, 2].Value = cliente.Email;
+                    worksheet.Cells[row, 3].Value = cliente.Idade;
+                    worksheet.Cells[row, 4].Value = cliente.Localidade;
+                    worksheet.Cells[row, 5].Value = cliente.Necessidade;
+                    worksheet.Cells[row, 6].Value = cliente.Telefone;
+                    worksheet.Cells[row, 7].Value = cliente.Horario;
+                    worksheet.Cells[row, 8].Value = cliente.DataCadastro;
+                    worksheet.Cells[row, 9].Value = cliente.DiaSemana;
+                    row++;
+                }
+
+                var style = worksheet.Cells[1, 1, row, 9].Style;
+                style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                // Converte o pacote Excel em um array de bytes
+                byte[] fileContents = excelPackage.GetAsByteArray();
+
+                var caminho = @"C:\Users\frede\OneDrive\Documentos\Freelancers\ProjetoOticaBoavisao\ProjetoOticaBoaVisao\Clientes.xlsx";
+
+                if (System.IO.File.Exists(caminho))
+                    System.IO.File.Delete(caminho);
+
+                FileStream fileStream = System.IO.File.Create(caminho);
+                fileStream.Close();
+
+                System.IO.File.WriteAllBytes(caminho, fileContents);
+
+                excelPackage.Dispose();
+
+                byte[] fileBytes = System.IO.File.ReadAllBytes(caminho);
+                string fileName = Path.GetFileName(caminho);
+
+                return Json(File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName));
             }
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Mensagem = ex.Message });
+        }
+    }
 
-            // Converte o pacote Excel em um array de bytes
-            byte[] fileContents = excelPackage.GetAsByteArray();
+    [HttpPost]
+    public JsonResult DownloadFile(FiltroCliente cliente)
+    {
+        try
+        {
+            // Lê os bytes do arquivo
+            byte[] fileBytes = System.IO.File.ReadAllBytes(cliente.Nome);
 
-            // Retorna o arquivo Excel como um FileResult para fazer o download
-            return Json(fileContents);
+            // Define o tipo MIME do arquivo
+            string contentType = "application/octet-stream"; // Tipo MIME genérico para download de arquivos
+
+            // Obtém o nome do arquivo
+            string fileName = Path.GetFileName(cliente.Nome);
+
+            // Retorna o arquivo para download
+            return Json(File(fileBytes, contentType, fileName));
+        }
+        catch (Exception ex)
+        {
+            return Json(new { ex.Message });
         }
     }
 

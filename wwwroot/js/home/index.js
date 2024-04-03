@@ -77,27 +77,68 @@ $(document).ready(function () {
         formCliente[0].reset();
     });
 
+    function baixarArquivo(filePath) {
+        // Faz uma solicitação AJAX para o endpoint de download
+        $.ajax({
+            url: '/Home/DownloadFile',
+            type: 'POST',
+            data: { nome: filePath },
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+                // Verifica o tipo de resposta
+                var contentType = xhr.getResponseHeader('Content-Type');
+
+                // Cria um objeto Blob a partir dos dados da resposta
+                var blob = new Blob([data], { type: contentType });
+
+                // Cria um URL temporário para o Blob
+                var url = window.URL.createObjectURL(blob);
+
+                // Cria um link <a> temporário
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'arquivo.xlsx'; // Nome do arquivo de download
+
+                // Simula o clique no link para iniciar o download
+                document.body.appendChild(link);
+                link.click();
+
+                // Libera o URL temporário
+                window.URL.revokeObjectURL(url);
+
+                // Remove o link do corpo do documento
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao baixar o arquivo:', error);
+            }
+        });
+    }
+
+
     $("#downloadButton").click(function () {
         var formData = new FormData($("#filterForm")[0]);
 
         $.ajax({
             url: "/Home/ExportarParaExcel",
-            type: "GET",
+            type: "POST",
+            data: formData,
             contentType: false,
             processData: false,
-            data: formData,
             success: function (data) {
-                // Cria um novo blob com os bytes recebidos
-                var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                var blob = new Blob([data.fileContents], { type: 'application/octet-stream' });
 
-                // Salva o arquivo Excel usando FileSaver.js
-                saveAs(blob, 'clientes.xlsx');
+                // Usa o FileSaver.js para baixar o arquivo
+                saveAs(blob, data.fileDownloadName);
             },
             error: function (xhr, status, error) {
                 // Trata erros
                 console.error(xhr.responseText);
+                console.error(error);
             }
         });
+
     });
 
     $("#btnSalvarCliente").click(function () {
