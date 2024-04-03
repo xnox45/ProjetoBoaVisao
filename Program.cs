@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjetoOticaBoaVisao.Data;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,23 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie(options =>
+       {
+           options.Cookie.Name = "SecurityAppCookieName";
+           options.Cookie.HttpOnly = true;
+           options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+           options.LoginPath = "/Account/Index"; // Rota para a página de login
+           options.LogoutPath = "/Account/Index"; // Rota para a página de logout
+       }
+);
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminClaim", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+});
+
 
 var app = builder.Build();
 

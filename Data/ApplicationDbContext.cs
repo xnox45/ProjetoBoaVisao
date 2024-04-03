@@ -12,4 +12,5 @@ public class ApplicationDbContext : IdentityDbContext
     }
 
     public DbSet<Cliente> Clientes { get; set; } = default!;
+    public DbSet<User> Users { get; set; } = default!;
 }

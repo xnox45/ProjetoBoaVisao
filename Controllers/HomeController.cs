@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using ProjetoOticaBoaVisao.Data;
 using ProjetoOticaBoaVisao.Models;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Security.Claims;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace ProjetoOticaBoaVisao.Controllers;
 
+[Authorize(Policy = "RequireAdminClaim")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -25,11 +25,6 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        string? login = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
-
-        if (login == null)
-            return RedirectToPage("/Account/Login", new { area = "Identity" });
-
         return View();
     }
 
