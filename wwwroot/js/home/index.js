@@ -120,24 +120,45 @@ $(document).ready(function () {
     $("#downloadButton").click(function () {
         var formData = new FormData($("#filterForm")[0]);
 
-        $.ajax({
-            url: "/Home/ExportarParaExcel",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                var blob = new Blob([data.fileContents], { type: 'application/octet-stream' });
+        //$.ajax({
+        //    url: "/Home/ExportarParaExcel",
+        //    type: "POST",
+        //    data: formData,
+        //    contentType: false,
+        //    processData: false,
+        //    success: function (data) {
+        //        var blob = new Blob([data.fileContents], { type: 'application/octet-stream' });
 
-                // Usa o FileSaver.js para baixar o arquivo
-                saveAs(blob, data.fileDownloadName);
-            },
-            error: function (xhr, status, error) {
-                // Trata erros
-                console.error(xhr.responseText);
-                console.error(error);
-            }
-        });
+        //        // Usa o FileSaver.js para baixar o arquivo
+        //        saveAs(blob, data.fileDownloadName);
+        //    },
+        //    error: function (xhr, status, error) {
+        //        // Trata erros
+        //        console.error(xhr.responseText);
+        //        console.error(error);
+        //    }
+        //});
+
+        //$.ajax({
+        //    url: '/Home/ExportarParaExcel',
+        //    type: 'POST',
+        //    data: formData,
+        //    xhrFields: {
+        //        responseType: 'blob'
+        //    },
+        //    success: function (data) {
+        //        var blob = new Blob([data]);
+        //        var link = document.createElement('a');
+        //        link.href = window.URL.createObjectURL(blob);
+        //        link.download = 'Clientes.xlsx';
+        //        link.click();
+        //    },
+        //    error: function (xhr, status, error) {
+        //        console.error(xhr.responseText);
+        //    }
+        //});
+
+        location.href = 'Home/DownloadCSV';
 
     });
 

@@ -83,7 +83,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> ExportarParaExcel(FiltroCliente filtro)
+    public async Task<IActionResult> ExportarParaExcel(FiltroCliente filtro)
     {
         try
         {
@@ -146,10 +146,15 @@ public class HomeController : Controller
 
                 excelPackage.Dispose();
 
-                byte[] fileBytes = System.IO.File.ReadAllBytes(caminho);
-                string fileName = Path.GetFileName(caminho);
+                fileContents = System.IO.File.ReadAllBytes(caminho);
 
-                return Json(File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName));
+                // Define o tipo de conteúdo do cabeçalho HTTP
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                // Define o nome do arquivo
+                Response.Headers.Add("Content-Disposition", "attachment; filename=Clientes.xlsx");
+
+                // Envia os bytes do arquivo como resposta
+                return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }
         }
         catch (Exception ex)
@@ -158,27 +163,17 @@ public class HomeController : Controller
         }
     }
 
-    [HttpPost]
-    public JsonResult DownloadFile(FiltroCliente cliente)
+    public ActionResult DownloadCSV()
     {
-        try
-        {
-            // Lê os bytes do arquivo
-            byte[] fileBytes = System.IO.File.ReadAllBytes(cliente.Nome);
+        string diretorioProjeto = AppDomain.CurrentDomain.BaseDirectory;
 
-            // Define o tipo MIME do arquivo
-            string contentType = "application/octet-stream"; // Tipo MIME genérico para download de arquivos
+        // Combine o caminho do diretório do projeto com o caminho do arquivo Excel
+        string caminho = Path.Combine(diretorioProjeto, "Clientes.xlsx");
 
-            // Obtém o nome do arquivo
-            string fileName = Path.GetFileName(cliente.Nome);
+        byte[] fileContents = System.IO.File.ReadAllBytes(caminho);
 
-            // Retorna o arquivo para download
-            return Json(File(fileBytes, contentType, fileName));
-        }
-        catch (Exception ex)
-        {
-            return Json(new { ex.Message });
-        }
+        return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Clientes.xlsx");
+
     }
 
     [HttpGet]
