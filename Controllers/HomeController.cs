@@ -34,6 +34,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<JsonResult> SalvarCliente(FiltroCliente filtro)
     {
         Cliente cliente = new();
