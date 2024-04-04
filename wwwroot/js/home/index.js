@@ -77,46 +77,6 @@ $(document).ready(function () {
         formCliente[0].reset();
     });
 
-    function baixarArquivo(filePath) {
-        // Faz uma solicitação AJAX para o endpoint de download
-        $.ajax({
-            url: '/Home/DownloadFile',
-            type: 'POST',
-            data: { nome: filePath },
-            contentType: false,
-            processData: false,
-            success: function (data, status, xhr) {
-                // Verifica o tipo de resposta
-                var contentType = xhr.getResponseHeader('Content-Type');
-
-                // Cria um objeto Blob a partir dos dados da resposta
-                var blob = new Blob([data], { type: contentType });
-
-                // Cria um URL temporário para o Blob
-                var url = window.URL.createObjectURL(blob);
-
-                // Cria um link <a> temporário
-                var link = document.createElement('a');
-                link.href = url;
-                link.download = 'arquivo.xlsx'; // Nome do arquivo de download
-
-                // Simula o clique no link para iniciar o download
-                document.body.appendChild(link);
-                link.click();
-
-                // Libera o URL temporário
-                window.URL.revokeObjectURL(url);
-
-                // Remove o link do corpo do documento
-                document.body.removeChild(link);
-            },
-            error: function (xhr, status, error) {
-                console.error('Erro ao baixar o arquivo:', error);
-            }
-        });
-    }
-
-
     $("#downloadButton").click(function () {
         var formData = new FormData($("#filterForm")[0]);
 
@@ -156,28 +116,69 @@ $(document).ready(function () {
     });
 
     $("#LocalidadeModal").change(function () {
-        atualizarHorario();
-    });
-
-    function atualizarHorario() {
-        var selectedLocalidade = $("#LocalidadeModal").val();
+        var selectedLocalidade = $(this).val();
         var horarios = {
-            1: ["13:30", "14:00", "14:30", "15:00", "15:30"],
-            2: ["09:30", "10:00", "10:30", "11:00", "11:30"]
+            1: ["10:00", "10:15", "10:30", "10:45",
+                "11:00", "11:15", "11:30", "11:45",
+                "13:00", "13:15", "13:30", "13:45",
+                "14:00", "14:15", "14:30", "14:45",
+                "15:00", "15:15", "15:30", "15:45",
+                "16:00"],
+            2: ["09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30"],
+            3: ["13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:30", "15:45"]
         };
 
         var horarioSelect = $("#HorarioModal");
+        horarioSelect.empty();
 
         if (selectedLocalidade !== "") {
             horarioSelect.empty();
-            $.each(horarios[selectedLocalidade], function (index, value) {
-                horarioSelect.append($("<option></option>").attr("value", value).text(value));
-            });
+            if ($("#DiaSemanaModal").val() == "2" && selectedLocalidade == "1") {
+                $.each(horarios[3], function (index, value) {
+                    horarioSelect.append($("<option></option>").attr("value", value).text(value));
+                });
+            }
+
+            else if ($("#DiaSemanaModal").val() == "3" && selectedLocalidade == "2") {
+                horarioSelect.empty();
+                $.each(horarios[1], function (index, value) {
+                    horarioSelect.append($("<option></option>").attr("value", value).text(value));
+                });
+            }
+
+            else {
+                horarioSelect.empty();
+                $.each(horarios[selectedLocalidade], function (index, value) {
+                    horarioSelect.append($("<option></option>").attr("value", value).text(value));
+                });
+            }
         }
-    }
+    });
 
     // Chama a função uma vez para inicializar os horários com base na seleção inicial (se houver)
     $("#LocalidadeModal").trigger("change");
+
+    $("#DiaSemanaModal").change(function () {
+        var selectedDiaSemana = $(this).val();
+        var lojasSemana = {
+            1: [{ text: "Santos", value: "1" }],
+            2: [{ text: "Santos", value: "1" }, { text: "Praia Grande", value: "2" }],
+            3: [{ text: "Praia Grande", value: "2" }],
+        };
+
+        var localidadeSelect = $("#LocalidadeModal");
+        localidadeSelect.empty(); // Limpa as opções anteriores
+
+        if (selectedDiaSemana !== "") {
+            $.each(lojasSemana[selectedDiaSemana], function (index, obj) {
+                localidadeSelect.append($("<option></option>").attr("value", obj.value).text(obj.text));
+            });
+        }
+
+        $("#LocalidadeModal").trigger("change");
+    });
+
+    $("#DiaSemanaModal").trigger("change");
 
     function carregarDados() {
 
@@ -225,8 +226,8 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (data) {
+                $("#DiaSemanaModal").trigger("change");
                 $("#formCliente select[name='Localidade']").val(data.idLocalidade);
-                atualizarHorario();
                 $("#formCliente input[name='Nome']").val(data.nome);
                 $("#formCliente input[name='Email']").val(data.email);
                 $("#formCliente input[name='Idade']").val(data.idade);
