@@ -136,7 +136,7 @@ $(document).ready(function () {
             }
         });
 
-        location.href = 'Home/DownloadCSV';
+        location.href = '/Home/DownloadCSV';
 
     });
 
