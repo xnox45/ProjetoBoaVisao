@@ -161,7 +161,6 @@ jQuery.noConflict();
             contentType: false,
             processData: false,
             success: function (response) {
-                console.log("aquiii");
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.log('Erro ao salvar cliente:', textStatus);
@@ -205,6 +204,7 @@ jQuery.noConflict();
         var texto = `Dia da Semana: ${$("#DiaSemana").find("option:selected").html()} \nNome: ${obj.Nome} \nNecessidade: ${necessidade} \nHorario: ${obj.Horario} \nIdade: ${obj.Idade} \nTelefone: ${obj.Telefone} \nEmail: ${obj.Email} \nLocalidade: ${$("#Localidade").find("option:selected").html()}`;
 
         salvarCliente();
+        fbq('track', 'SubscribedButtonClick');
 
         if (obj.Necessidade < 3) {
             var textoCodificado = encodeURIComponent(texto);
