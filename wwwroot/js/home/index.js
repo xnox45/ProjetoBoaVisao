@@ -118,14 +118,14 @@ $(document).ready(function () {
     $("#LocalidadeModal").change(function () {
         var selectedLocalidade = $(this).val();
         var horarios = {
-            1: ["10:00", "10:15", "10:30", "10:45",
-                "11:00", "11:15", "11:30", "11:45",
-                "13:00", "13:15", "13:30", "13:45",
-                "14:00", "14:15", "14:30", "14:45",
-                "15:00", "15:15", "15:30", "15:45",
-                "16:00"],
+            1: ["09:00", "09:15", "09:30", "09:45",
+                "10:00", "10:15", "10:30", "10:45",
+                "11:00", "11:15", "11:30", "11:45"],
             2: ["09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30"],
-            3: ["13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:30", "15:45"]
+            3: ["14:00", "14:15", "14:30", "14:45",
+                "15:00", "15:15", "15:30", "15:45",
+                "16:00", "16:15", "16:30", "16:45", "17:00"],
+            4: ["13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:30"],
         };
 
         var horarioSelect = $("#HorarioModal");
@@ -133,25 +133,49 @@ $(document).ready(function () {
 
         if (selectedLocalidade !== "") {
             horarioSelect.empty();
-            if ($("#DiaSemanaModal").val() == "2" && selectedLocalidade == "1") {
-                $.each(horarios[3], function (index, value) {
-                    horarioSelect.append($("<option></option>").attr("value", value).text(value));
-                });
-            }
-
-            else if ($("#DiaSemanaModal").val() == "3" && selectedLocalidade == "2") {
-                horarioSelect.empty();
+            if ($("#DiaSemanaModal").val() == "1" && selectedLocalidade == "1") {
                 $.each(horarios[1], function (index, value) {
                     horarioSelect.append($("<option></option>").attr("value", value).text(value));
                 });
             }
 
-            else {
-                horarioSelect.empty();
-                $.each(horarios[selectedLocalidade], function (index, value) {
+            else if ($("#DiaSemanaModal").val() == "1" && selectedLocalidade == "2") {
+                $.each(horarios[3], function (index, value) {
                     horarioSelect.append($("<option></option>").attr("value", value).text(value));
                 });
             }
+
+            else if ($("#DiaSemanaModal").val() == "2" && selectedLocalidade == "1") {
+                $.each(horarios[4], function (index, value) {
+                    horarioSelect.append($("<option></option>").attr("value", value).text(value));
+                });
+            }
+
+            else {
+                $.each(horarios[2], function (index, value) {
+                    horarioSelect.append($("<option></option>").attr("value", value).text(value));
+                });
+            }
+
+            //if ($("#DiaSemanaModal").val() == "2" && selectedLocalidade == "1") {
+            //    $.each(horarios[3], function (index, value) {
+            //        horarioSelect.append($("<option></option>").attr("value", value).text(value));
+            //    });
+            //}
+
+            //else if ($("#DiaSemanaModal").val() == "3" && selectedLocalidade == "2") {
+            //    horarioSelect.empty();
+            //    $.each(horarios[1], function (index, value) {
+            //        horarioSelect.append($("<option></option>").attr("value", value).text(value));
+            //    });
+            //}
+
+            //else {
+            //    horarioSelect.empty();
+            //    $.each(horarios[4], function (index, value) {
+            //        horarioSelect.append($("<option></option>").attr("value", value).text(value));
+            //    });
+            //}
         }
     });
 
@@ -161,9 +185,8 @@ $(document).ready(function () {
     $("#DiaSemanaModal").change(function () {
         var selectedDiaSemana = $(this).val();
         var lojasSemana = {
-            1: [{ text: "Santos", value: "1" }],
-            2: [{ text: "Santos", value: "1" }, { text: "Praia Grande", value: "2" }],
-            3: [{ text: "Praia Grande", value: "2" }],
+            1: [{ text: "Santos", value: "1" }, { text: "Praia Grande", value: "2" }],
+            2: [{ text: "Santos", value: "1" }, { text: "Praia Grande", value: "2" }]
         };
 
         var localidadeSelect = $("#LocalidadeModal");
