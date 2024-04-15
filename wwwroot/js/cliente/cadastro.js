@@ -80,8 +80,7 @@ jQuery.noConflict();
 
             var diasSemana = [
                 { text: "Segunda", value: 1 },
-                { text: "Quinta", value: 2 },
-                { text: "Sexta", value: 3 }
+                { text: "Quinta", value: 2 }
             ]
 
             var selectDiaSemana = $("#DiaSemana")
@@ -93,8 +92,8 @@ jQuery.noConflict();
                 selectDiaSemana.append($("<option></option>").attr("value", diasSemana[1].value).text(diasSemana[1].text));
             }
             else if ($(this).val() == "2") {
+                selectDiaSemana.append($("<option></option>").attr("value", diasSemana[0].value).text(diasSemana[0].text));
                 selectDiaSemana.append($("<option></option>").attr("value", diasSemana[1].value).text(diasSemana[1].text));
-                selectDiaSemana.append($("<option></option>").attr("value", diasSemana[2].value).text(diasSemana[2].text));
 
             }
 
@@ -105,12 +104,12 @@ jQuery.noConflict();
 
         $("#DiaSemana").change(function () {
             var horarios = {
-                1: ["10:00", "10:15", "10:30", "10:45",
+                1: ["09:00", "09:15", "09:30", "09:45",
+                    "10:00", "10:15", "10:30", "10:45",
                     "11:00", "11:15", "11:30", "11:45",
-                    "13:00", "13:15", "13:30", "13:45",
                     "14:00", "14:15", "14:30", "14:45",
                     "15:00", "15:15", "15:30", "15:45",
-                    "16:00"],
+                    "16:00", "16:15", "16:30", "16:45", "17:00"],
                 2: ["09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30"],
                 3: ["13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:30"]
             };
