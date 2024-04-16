@@ -203,7 +203,8 @@ jQuery.noConflict();
         var texto = `Dia da Semana: ${$("#DiaSemana").find("option:selected").html()} \nNome: ${obj.Nome} \nNecessidade: ${necessidade} \nHorario: ${obj.Horario} \nIdade: ${obj.Idade} \nTelefone: ${obj.Telefone} \nEmail: ${obj.Email} \nLocalidade: ${$("#Localidade").find("option:selected").html()}`;
 
         salvarCliente();
-        fbq('track', 'SubscribedButtonClick');
+
+        fbq('track', 'CompleteRegistration');
 
         if (obj.Necessidade < 3) {
             var textoCodificado = encodeURIComponent(texto);
