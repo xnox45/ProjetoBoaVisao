@@ -39,6 +39,10 @@ public class HomeController : Controller
     {
         Cliente cliente = new();
 
+        TimeZoneInfo tzBrasil = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+
+        DateTime horaBrasil = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzBrasil);
+
         if (filtro.Id != null)
         {
             cliente = _context.Clientes.FirstOrDefault(x => x.Id == filtro.Id);
@@ -56,7 +60,7 @@ public class HomeController : Controller
         {
             cliente = new Cliente
             {
-                DataCadastro = DateTime.Today,
+                DataCadastro = horaBrasil,
                 Idade = filtro.Idade.Value,
                 Email = filtro.Email,
                 Horario = filtro.Horario,
