@@ -187,6 +187,15 @@ jQuery.noConflict();
                 }
             }
 
+            if (nomeProp == "Telefone") {
+                var telefone = $(this).val();
+
+                if (telefone.length !== 15) {
+                    $(this).addClass("invalid");
+                    naoEnviar = true;
+                }
+            }
+
             if (valor == undefined || valor == null || valor == "") {
                 $(this).addClass("invalid");
                 naoEnviar = true;
