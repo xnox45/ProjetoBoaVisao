@@ -235,9 +235,11 @@ public class HomeController : Controller
         if (filtro.DiaSemana != null)
             queryable = queryable.Where(x => x.DiaSemana == filtro.DiaSemana);
 
+        queryable = queryable.OrderByDescending(x => x.DataCadastro);
+
         await queryable.ForEachAsync(x =>
         {
-            x.Necessidade = x.IdNecessidade == 1 ? "Exame de Rotina" : x.IdNecessidade == 2 ? "Revisão do Grau" : x.IdNecessidade == 3 ? "Tratamento de Catarata" : x.IdNecessidade == 4 ? "Tratamento de Glaucoma" : x.IdNecessidade == 5 ? "Tratamento de Ceratocone" : x.IdNecessidade == 6 ? "Tratamento de Pterígio" : "";
+            x.Necessidade = x.IdNecessidade == 1 ? "Exame de Rotina" : x.IdNecessidade == 2 ? "Revisão do Grau" : x.IdNecessidade == 3 ? "Tratamento de Catarata" : x.IdNecessidade == 4 ? "Tratamento de Glaucoma" : x.IdNecessidade == 5 ? "Tratamento de Ceratocone" : x.IdNecessidade == 6 ? "Tratamento de Pterígio" : x.IdNecessidade == 7 ? "Outros" : "";
             x.Localidade = x.IdLocalidade == 1 ? "Santos" : x.IdLocalidade == 2 ? "Praia Grande" : "";
             x.DiaSemana = x.DiaSemana == "1" ? "Segunda" : x.DiaSemana == "2" ? "Quinta" : x.DiaSemana == "3" ? "Sexta" : "";
         });
