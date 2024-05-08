@@ -79,7 +79,6 @@ jQuery.noConflict();
         $("#Localidade").change(function () {
 
             var diasSemana = [
-                { text: "Segunda", value: 1 },
                 { text: "Quinta", value: 2 }
             ]
 
@@ -89,11 +88,11 @@ jQuery.noConflict();
 
             if ($(this).val() == "1") {
                 selectDiaSemana.append($("<option></option>").attr("value", diasSemana[0].value).attr("selected", true).text(diasSemana[0].text));
-                selectDiaSemana.append($("<option></option>").attr("value", diasSemana[1].value).text(diasSemana[1].text));
+                //selectDiaSemana.append($("<option></option>").attr("value", diasSemana[1].value).text(diasSemana[1].text));
             }
             else if ($(this).val() == "2") {
                 selectDiaSemana.append($("<option></option>").attr("value", diasSemana[0].value).text(diasSemana[0].text));
-                selectDiaSemana.append($("<option></option>").attr("value", diasSemana[1].value).text(diasSemana[1].text));
+                //selectDiaSemana.append($("<option></option>").attr("value", diasSemana[1].value).text(diasSemana[1].text));
 
             }
 
@@ -107,8 +106,8 @@ jQuery.noConflict();
                 1: ["09:00", "09:15", "09:30", "09:45",
                     "10:00", "10:15", "10:30", "10:45",
                     "11:00", "11:15", "11:30", "11:45"],
-                2: ["09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30"],
-                3: ["13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:30"],
+                2: ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00"],
+                3: [/*"13:30", "13:45",*/ "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00"],
                 4: ["14:00", "14:15", "14:30", "14:45",
                     "15:00", "15:15", "15:30", "15:45",
                     "16:00", "16:15", "16:30", "16:45", "17:00"]
